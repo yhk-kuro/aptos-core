@@ -64,6 +64,7 @@ members = [
     "devtools/x",
     "devtools/x-core",
     "devtools/x-lint",
+    "docker/docker_remote_build",
     "ecosystem/indexer",
     "execution/db-bootstrapper",
     "execution/executor",
