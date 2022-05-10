@@ -59,6 +59,25 @@ pub type AtomicVersion = AtomicU64;
 // In StateDB, things readable by the genesis transaction are under this version.
 pub const PRE_GENESIS_VERSION: Version = u64::max_value();
 
+pub trait NextStateVersion {
+    fn next_state_version(&self) -> Version;
+}
+
+impl NextStateVersion for Option<Version> {
+    fn next_state_version(&self) -> Version {
+        match self {
+            None => 0,
+            Some(v) => {
+                if *v == PRE_GENESIS_VERSION {
+                    0
+                } else {
+                    *v + 1
+                }
+            }
+        }
+    }
+}
+
 /// RawTransaction is the portion of a transaction that a client signs.
 #[derive(
     Clone, Debug, Hash, Eq, PartialEq, Serialize, Deserialize, CryptoHasher, BCSCryptoHash,
